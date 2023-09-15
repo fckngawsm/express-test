@@ -46,11 +46,11 @@ export const loginUser: RequestHandler = (req, res, next) => {
     },
   })
     .then((user) => {
-      console.log(user);
       if (user) {
         return bcrypt.compare(password, user.password).then((matched) => {
+          console.log(matched);
           if (!matched) {
-            return Promise.reject("неправильный пароль или логин");
+            throw new Error("пользователя с такой почтой не существует");
           }
           res.send({
             data: {
