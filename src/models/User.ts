@@ -10,18 +10,30 @@ export class User extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
+  email!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  password!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
   name!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  breed!: string;
+  lastname!: string;
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: true,
-    defaultValue: true,
+    defaultValue: false,
   })
-  isGoodBoy!: boolean;
+  isAdmin?: boolean;
 }

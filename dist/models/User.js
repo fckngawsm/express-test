@@ -21,6 +21,20 @@ __decorate([
         allowNull: false,
     }),
     __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false,
+    }),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false,
+    }),
+    __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -28,15 +42,15 @@ __decorate([
         allowNull: false,
     }),
     __metadata("design:type", String)
-], User.prototype, "breed", void 0);
+], User.prototype, "lastname", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.BOOLEAN,
         allowNull: true,
-        defaultValue: true,
+        defaultValue: false,
     }),
     __metadata("design:type", Boolean)
-], User.prototype, "isGoodBoy", void 0);
+], User.prototype, "isAdmin", void 0);
 exports.User = User = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: true,
