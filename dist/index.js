@@ -8,6 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = require("body-parser");
 const db_config_1 = __importDefault(require("./config/db-config"));
 const users_1 = __importDefault(require("./routes/users"));
+const sendError_1 = require("./middlewares/sendError");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
@@ -22,6 +23,7 @@ db_config_1.default
     .catch((err) => {
     console.log("Error", err);
 });
+app.use(sendError_1.handleSendError);
 // вынести в переменную
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
