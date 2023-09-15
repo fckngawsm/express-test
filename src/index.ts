@@ -2,8 +2,9 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import { json, urlencoded } from "body-parser";
 import connection from "./config/db-config";
-import userRoutes from "./routes/users";
+import { router } from "./routes";
 import { handleSendError } from "./middlewares/sendError";
+import { createUser, loginUser } from "./controllers/users";
 
 dotenv.config();
 
@@ -13,7 +14,10 @@ const port = process.env.PORT;
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.use("/users", userRoutes);
+app.post("/signup", createUser);
+app.post("/signin", loginUser);
+
+app.use("/", router);
 
 connection
   .sync()
