@@ -25,7 +25,7 @@ connection
   });
 
 app.use(handleSendError);
-// вынести в переменную
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });

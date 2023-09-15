@@ -24,7 +24,6 @@ db_config_1.default
     console.log("Error", err);
 });
 app.use(sendError_1.handleSendError);
-// вынести в переменную
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
