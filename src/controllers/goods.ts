@@ -35,3 +35,14 @@ export const createGoods: RequestHandler = (req, res, next) => {
       next(err);
     });
 };
+
+export const deleteProductById: RequestHandler = (req, res, next) => {
+  const { id } = req.params;
+  Goods.destroy({ where: { id: id } })
+    .then(() => {
+      res.send(`Элtмент с id ${id} был удален`);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};

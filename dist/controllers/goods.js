@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createGoods = exports.getAllGoods = void 0;
+exports.deleteProductById = exports.createGoods = exports.getAllGoods = void 0;
 const Goods_1 = require("../models/Goods");
 const getAllGoods = (req, res, next) => {
     Goods_1.Goods.findAll({})
@@ -35,3 +35,14 @@ const createGoods = (req, res, next) => {
     });
 };
 exports.createGoods = createGoods;
+const deleteProductById = (req, res, next) => {
+    const { id } = req.params;
+    Goods_1.Goods.destroy({ where: { id: id } })
+        .then(() => {
+        res.send(`Элtмент с id ${id} был удален`);
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.deleteProductById = deleteProductById;
