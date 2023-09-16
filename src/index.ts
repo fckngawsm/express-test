@@ -5,6 +5,7 @@ import connection from "./config/db-config";
 import { router } from "./routes";
 import { handleSendError } from "./middlewares/sendError";
 import { createUser, loginUser } from "./controllers/users";
+import { auth } from "./middlewares/auth";
 
 dotenv.config();
 

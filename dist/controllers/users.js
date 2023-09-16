@@ -1,11 +1,22 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.createUser = exports.getAllUsers = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
+const bad_request_err_1 = require("../utils/bad-request-err");
 const getAllUsers = (_, res, next) => {
     User_1.User.findAll({})
         .then((user) => {
@@ -38,33 +49,42 @@ const createUser = (req, res, next) => {
     });
 };
 exports.createUser = createUser;
-const loginUser = (req, res, next) => {
+const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
-    return User_1.User.findOne({
+    const user = yield User_1.User.findOne({
         where: {
             email: email,
         },
-    })
-        .then((user) => {
-        if (user) {
-            return bcryptjs_1.default.compare(password, user.password).then((matched) => {
-                console.log(matched);
-                if (!matched) {
-                    throw new Error("пользователя с такой почтой не существует");
-                }
-                res.send({
-                    data: {
-                        email: user.email,
-                        name: user.name,
-                        about: user.lastname,
-                        isAdmin: user.isAdmin,
-                    },
-                });
-            });
-        }
-    })
-        .catch((err) => {
-        next(err);
     });
-};
+    if (user) {
+        const matched = yield bcryptjs_1.default.compare(password, user.password);
+        if (matched) {
+            const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name }, "secret-key");
+            res.json({ token });
+        }
+        else {
+            throw new bad_request_err_1.BadRequestError("Проверьте введенные данные");
+        }
+    }
+    else {
+        next();
+    }
+});
 exports.loginUser = loginUser;
+// interface IGetUserAuthInfoRequest extends Request {
+//   user: {
+//     id: number;
+//     email: string;
+//     name: string;
+//   };
+// }
+// export const getCurrentUser = (
+//   req: IGetUserAuthInfoRequest,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   const { id } = req.user;
+//   User.findByPk(id).then((user) => {
+//     console.log(user);
+//   });
+// };

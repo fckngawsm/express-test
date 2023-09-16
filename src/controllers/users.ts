@@ -1,6 +1,9 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import bcrypt from "bcryptjs";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "../models/User";
+import { NotFoundError } from "../utils/not-found-err";
+import { BadRequestError } from "../utils/bad-request-err";
 
 export const getAllUsers: RequestHandler = (_, res, next) => {
   User.findAll({})
@@ -38,32 +41,44 @@ export const createUser: RequestHandler = (req, res, next) => {
     });
 };
 
-export const loginUser: RequestHandler = (req, res, next) => {
+export const loginUser: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body;
-  return User.findOne({
+  const user = await User.findOne({
     where: {
       email: email,
     },
-  })
-    .then((user) => {
-      if (user) {
-        return bcrypt.compare(password, user.password).then((matched) => {
-          console.log(matched);
-          if (!matched) {
-            throw new Error("пользователя с такой почтой не существует");
-          }
-          res.send({
-            data: {
-              email: user.email,
-              name: user.name,
-              about: user.lastname,
-              isAdmin: user.isAdmin,
-            },
-          });
-        });
-      }
-    })
-    .catch((err) => {
-      next(err);
-    });
+  });
+  if (user) {
+    const matched = await bcrypt.compare(password, user.password);
+    if (matched) {
+      const token = jwt.sign(
+        { id: user.id, email: user.email, name: user.name },
+        "secret-key"
+      );
+      res.json({ token });
+    } else {
+      throw new BadRequestError("Проверьте введенные данные");
+    }
+  } else {
+    next();
+  }
 };
+
+// interface IGetUserAuthInfoRequest extends Request {
+//   user: {
+//     id: number;
+//     email: string;
+//     name: string;
+//   };
+// }
+
+// export const getCurrentUser = (
+//   req: IGetUserAuthInfoRequest,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   const { id } = req.user;
+//   User.findByPk(id).then((user) => {
+//     console.log(user);
+//   });
+// };
