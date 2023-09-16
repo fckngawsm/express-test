@@ -40,7 +40,7 @@ const createUser = (req, res, next) => {
         data: {
             email: user.email,
             name: user.name,
-            about: user.lastname,
+            lastname: user.lastname,
             isAdmin: user.isAdmin,
         },
     }))

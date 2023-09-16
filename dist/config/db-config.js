@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
 const User_1 = require("../models/User");
+const Goods_1 = require("../models/Goods");
 const connection = new sequelize_typescript_1.Sequelize({
     dialect: "mysql",
     host: "localhost",
@@ -9,6 +10,6 @@ const connection = new sequelize_typescript_1.Sequelize({
     password: "password",
     database: "express",
     logging: false,
-    models: [User_1.User],
+    models: [User_1.User, Goods_1.Goods],
 });
 exports.default = connection;

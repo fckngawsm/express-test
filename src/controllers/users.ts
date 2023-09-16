@@ -2,7 +2,6 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "../models/User";
-import { NotFoundError } from "../utils/not-found-err";
 import { BadRequestError } from "../utils/bad-request-err";
 
 export const getAllUsers: RequestHandler = (_, res, next) => {
@@ -31,7 +30,7 @@ export const createUser: RequestHandler = (req, res, next) => {
         data: {
           email: user.email,
           name: user.name,
-          about: user.lastname,
+          lastname: user.lastname,
           isAdmin: user.isAdmin,
         },
       })

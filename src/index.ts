@@ -5,12 +5,14 @@ import connection from "./config/db-config";
 import { router } from "./routes";
 import { handleSendError } from "./middlewares/sendError";
 import { createUser, loginUser } from "./controllers/users";
-import { auth } from "./middlewares/auth";
+import cors from "cors";
 
 dotenv.config();
 
-const app: Express = express();
 const port = process.env.PORT;
+const app: Express = express();
+app.use(cors());
+
 
 app.use(json());
 app.use(urlencoded({ extended: true }));

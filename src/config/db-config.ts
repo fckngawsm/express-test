@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { User } from "../models/User";
+import { Goods } from "../models/Goods";
 
 const connection = new Sequelize({
   dialect: "mysql",
@@ -8,8 +9,7 @@ const connection = new Sequelize({
   password: "password",
   database: "express",
   logging: false,
-  models: [User],
+  models: [User, Goods],
 });
-
 
 export default connection;
