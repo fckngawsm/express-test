@@ -19,7 +19,7 @@ app.use((0, body_parser_1.json)());
 app.use((0, body_parser_1.urlencoded)({ extended: true }));
 app.post("/signup", users_1.createUser);
 app.post("/signin", users_1.loginUser);
-app.use("/", routes_1.router);
+app.use("/", routes_1.routes);
 db_config_1.default
     .sync()
     .then(() => {

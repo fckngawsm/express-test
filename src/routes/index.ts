@@ -1,6 +1,8 @@
-import userRoutes from "../routes/users";
-import router from "../routes/users";
+import userRoutes from "./users";
+import goodsRoutes from "./goods";
+const routes = require("express").Router();
 
-router.use("/users", userRoutes);
+routes.use("/users", userRoutes);
+routes.use("/goods", goodsRoutes);
 
-export { router };
+export { routes };

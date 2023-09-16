@@ -1,6 +1,6 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 import { BadRequestError } from "../utils/bad-request-err";
 

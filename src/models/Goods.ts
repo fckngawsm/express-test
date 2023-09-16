@@ -17,6 +17,12 @@ export class Goods extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
+  imageUrl!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
   title!: string;
 
   @Column({
