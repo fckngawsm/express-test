@@ -8,11 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.createUser = exports.getAllUsers = void 0;
+exports.getCurrentUser = exports.loginUser = exports.createUser = exports.getAllUsers = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
@@ -60,10 +71,11 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const matched = yield bcryptjs_1.default.compare(password, user.password);
         if (matched) {
             const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name }, "secret-key");
-            res.json({ token });
+            const _a = user.dataValues, { password } = _a, userData = __rest(_a, ["password"]);
+            res.json(Object.assign({ token }, userData));
         }
         else {
-            throw new bad_request_err_1.BadRequestError("Проверьте введенные данные");
+            throw new bad_request_err_1.BadRequestError("Проверьте введенные данsные");
         }
     }
     else {
@@ -71,6 +83,14 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.loginUser = loginUser;
-// export const getCurrentUser: RequestHandler = (req, res, next) => {
-//   console.log(req.user);
-// };
+const getCurrentUser = (req, res, next) => {
+    const { id } = req.user;
+    User_1.User.findByPk(id)
+        .then((user) => {
+        return res.json({ data: user });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.getCurrentUser = getCurrentUser;

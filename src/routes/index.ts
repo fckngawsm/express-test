@@ -1,10 +1,12 @@
 import userRoutes from "./users";
 import goodsRoutes from "./goods";
 import { Router } from "express";
+import { authenticateUserToken } from "../middlewares/auth";
 
-const routes = Router();
+const router = Router();
 
-routes.use("/users", userRoutes);
-routes.use("/goods", goodsRoutes);
+router.use("/", authenticateUserToken);
+router.use("/users", userRoutes);
+router.use("/goods", goodsRoutes);
 
-export { routes };
+export { router };

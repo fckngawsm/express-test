@@ -12,7 +12,7 @@ export const authenticateUserToken = async (
   const token: string = authHeader && authHeader.split(" ")[1];
   let payload;
   try {
-    payload = jwt.verify(token, "secret-key") as JwtPayload;
+    payload = jwt.verify(token, "secret-key");
   } catch (error) {
     return next(new UnauthorizedError("Ввойдите в аккаунт"));
   }

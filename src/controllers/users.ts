@@ -54,15 +54,23 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         { id: user.id, email: user.email, name: user.name },
         "secret-key"
       );
-      res.json({ token });
+      const { password, ...userData } = user.dataValues;
+      res.json({ token, ...userData });
     } else {
-      throw new BadRequestError("Проверьте введенные данные");
+      throw new BadRequestError("Проверьте введенные данsные");
     }
   } else {
     next();
   }
 };
 
-// export const getCurrentUser: RequestHandler = (req, res, next) => {
-//   console.log(req.user);
-// };
+export const getCurrentUser: RequestHandler = (req, res, next) => {
+  const { id } = req.user;
+  User.findByPk(id)
+    .then((user) => {
+      return res.json({ data: user });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};

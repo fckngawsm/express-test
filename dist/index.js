@@ -23,7 +23,7 @@ app.use((0, body_parser_1.json)());
 app.use((0, body_parser_1.urlencoded)({ extended: true }));
 app.post("/signup", users_1.createUser);
 app.post("/signin", users_1.loginUser);
-app.use("/", routes_1.routes);
+app.use("/", routes_1.router);
 User_1.User.hasMany(Goods_1.Goods);
 Goods_1.Goods.belongsTo(User_1.User, {
     constraints: true,
