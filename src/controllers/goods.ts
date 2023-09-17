@@ -40,7 +40,19 @@ export const deleteProductById: RequestHandler = (req, res, next) => {
   const { id } = req.params;
   Goods.destroy({ where: { id: id } })
     .then(() => {
-      res.send(`Элtмент с id ${id} был удален`);
+      res.send({ id });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+export const updateProductById: RequestHandler = (req, res, next) => {
+  const { id } = req.params;
+  const { title, price, categories, imageUrl } = req.body;
+  Goods.update({ title, price, categories, imageUrl }, { where: { id: id } })
+    .then(() => {
+      res.send({ id });
     })
     .catch((err) => {
       next(err);
