@@ -5,7 +5,7 @@ import { authenticateUserToken } from "../middlewares/auth";
 
 const router = Router();
 
-router.use("/", authenticateUserToken);
+// router.use("/", authenticateUserToken);
 router.use("/users", userRoutes);
 router.use("/goods", goodsRoutes);
 

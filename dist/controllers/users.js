@@ -87,7 +87,7 @@ const getCurrentUser = (req, res, next) => {
     const { id } = req.user;
     User_1.User.findByPk(id)
         .then((user) => {
-        return res.json({ data: user });
+        return res.json(user);
     })
         .catch((err) => {
         next(err);

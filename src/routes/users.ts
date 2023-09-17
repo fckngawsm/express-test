@@ -6,6 +6,6 @@ import { authenticateUserToken } from "../middlewares/auth";
 const router = Router();
 
 router.get("/", getAllUsers);
-router.get("/me", getCurrentUser);
+router.get("/me", authenticateUserToken, getCurrentUser);
 
 export default router;
