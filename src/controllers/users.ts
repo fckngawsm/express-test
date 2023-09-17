@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { NextFunction, RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
@@ -63,16 +63,9 @@ export const loginUser: RequestHandler = async (req, res, next) => {
   }
 };
 
-// interface IGetUserAuthInfoRequest extends Request {
-//   user: {
-//     id: number;
-//     email: string;
-//     name: string;
-//   };
-// }
 
 // export const getCurrentUser = (
-//   req: IGetUserAuthInfoRequest,
+//   req: RequestCustom,
 //   res: Response,
 //   next: NextFunction
 // ) => {

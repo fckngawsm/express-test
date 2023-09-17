@@ -1,26 +1,29 @@
-import jwt, { Secret } from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
-import { RequestCustom } from "../utils/Types/CustomRequest";
+import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
+import { User } from "../models/User";
+import { UnauthorizedError } from "../utils/unauthorized-err";
 
-export const SECRET_KEY: Secret = "your-secret-key-here";
-
-export const auth = async (
-  req: RequestCustom,
+export const authenticateUserToken = async (
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const authHeader: string = req.headers["authorization"]!;
+  const token: string = authHeader && authHeader.split(" ")[1];
+  let payload;
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
-
-    if (!token) {
-      throw new Error("Oshibka");
-    }
-
-    const decoded = jwt.verify(token, SECRET_KEY);
-    req.token = decoded;
-
-    next();
-  } catch (err) {
-    res.status(401).send("Please authenticate");
+    payload = jwt.verify(token, "secret-key");
+  } catch (error) {
+    return next(new UnauthorizedError("Ввойдите в аккаунт"));
   }
+  req.token = payload;
+  // if (token) {
+  //   jwt.verify(token, "secret-key") => {
+  //     req.user = user;
+  //     next();
+  //   };
+  // } else {
+  //   next();
+  // }
+  return next();
 };

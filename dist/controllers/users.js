@@ -71,15 +71,8 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.loginUser = loginUser;
-// interface IGetUserAuthInfoRequest extends Request {
-//   user: {
-//     id: number;
-//     email: string;
-//     name: string;
-//   };
-// }
 // export const getCurrentUser = (
-//   req: IGetUserAuthInfoRequest,
+//   req: RequestCustom,
 //   res: Response,
 //   next: NextFunction
 // ) => {
