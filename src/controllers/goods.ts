@@ -49,6 +49,7 @@ export const deleteProductById: RequestHandler = (req, res, next) => {
 
 export const updateProductById: RequestHandler = (req, res, next) => {
   const { id } = req.params;
+  console.log(id,'id')
   const { title, price, categories, imageUrl } = req.body;
   Goods.update({ title, price, categories, imageUrl }, { where: { id: id } })
     .then(() => {

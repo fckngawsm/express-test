@@ -48,6 +48,7 @@ const deleteProductById = (req, res, next) => {
 exports.deleteProductById = deleteProductById;
 const updateProductById = (req, res, next) => {
     const { id } = req.params;
+    console.log(id, 'id');
     const { title, price, categories, imageUrl } = req.body;
     Goods_1.Goods.update({ title, price, categories, imageUrl }, { where: { id: id } })
         .then(() => {

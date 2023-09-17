@@ -6,6 +6,10 @@ import { routes } from "./routes";
 import { handleSendError } from "./middlewares/sendError";
 import { createUser, loginUser } from "./controllers/users";
 import cors from "cors";
+import { User } from "./models/User";
+import { Goods } from "./models/Goods";
+import { Cart } from "./models/Cart";
+import { CartItem } from "./models/Cart-item";
 
 dotenv.config();
 
@@ -20,6 +24,17 @@ app.post("/signup", createUser);
 app.post("/signin", loginUser);
 
 app.use("/", routes);
+
+User.hasMany(Goods);
+Goods.belongsTo(User, {
+  constraints: true,
+  onDelete: "CASCADE",
+}); // ?
+User.hasOne(Cart);
+Cart.belongsToMany(Goods, {
+  through: CartItem,
+  foreignKey: "id",
+});
 
 connection
   .sync()
