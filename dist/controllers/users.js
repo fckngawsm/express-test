@@ -38,7 +38,7 @@ const getAllUsers = (_, res, next) => {
 exports.getAllUsers = getAllUsers;
 const createUser = (req, res, next) => {
     const { name, lastname, email, password, isAdmin } = req.body;
-    bcryptjs_1.default
+    return bcryptjs_1.default
         .hash(password, 10)
         .then((hash) => User_1.User.create({
         name,
@@ -48,12 +48,10 @@ const createUser = (req, res, next) => {
         password: hash,
     }))
         .then((user) => res.send({
-        data: {
-            email: user.email,
-            name: user.name,
-            lastname: user.lastname,
-            isAdmin: user.isAdmin,
-        },
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email,
+        isAdmin: user.isAdmin,
     }))
         .catch((err) => {
         next(err);

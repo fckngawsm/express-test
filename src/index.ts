@@ -7,9 +7,10 @@ import { handleSendError } from "./middlewares/sendError";
 import { createUser, loginUser } from "./controllers/users";
 import cors from "cors";
 import { User } from "./models/User";
-import { Goods } from "./models/Goods";
+import { Product } from "./models/Product";
 import { Cart } from "./models/Cart";
 import { CartItem } from "./models/Cart-item";
+// import { CartItem } from "./models/Cart-item";
 
 dotenv.config();
 // понять куда лучше вынести
@@ -27,21 +28,24 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.post("/signup", createUser);
 app.post("/signin", loginUser);
+app.post("/signup", createUser);
 
 app.use("/", router);
 
-User.hasMany(Goods);
-Goods.belongsTo(User, {
-  constraints: true,
-  onDelete: "CASCADE",
-}); // ?
 User.hasOne(Cart);
-Cart.belongsToMany(Goods, {
+Cart.belongsTo(User);
+
+Product.belongsToMany(Cart, {
   through: CartItem,
-  foreignKey: "id",
 });
+Cart.belongsToMany(Product, {
+  through: CartItem,
+});
+// Cart.belongsToMany(Goods, {
+//   through: CartItem,
+//   foreignKey: "id",
+// });
 
 connection
   .sync()

@@ -1,10 +1,10 @@
 import { RequestHandler } from "express";
-import { Goods } from "../models/Goods";
+import { Product } from "../models/Product";
 
 export const getAllGoods: RequestHandler = (req, res, next) => {
-  Goods.findAll({})
-    .then((goods) => {
-      res.send(goods);
+  Product.findAll({})
+    .then((product) => {
+      res.send(product);
     })
     .catch((err) => {
       next(err);
@@ -13,7 +13,7 @@ export const getAllGoods: RequestHandler = (req, res, next) => {
 
 export const createGoods: RequestHandler = (req, res, next) => {
   const { title, quantity, categories, price, imageUrl } = req.body;
-  Goods.create({
+  Product.create({
     title,
     quantity,
     categories,
@@ -38,7 +38,7 @@ export const createGoods: RequestHandler = (req, res, next) => {
 
 export const deleteProductById: RequestHandler = (req, res, next) => {
   const { id } = req.params;
-  Goods.destroy({ where: { id: id } })
+  Product.destroy({ where: { id: id } })
     .then(() => {
       res.send({ id });
     })
@@ -49,9 +49,8 @@ export const deleteProductById: RequestHandler = (req, res, next) => {
 
 export const updateProductById: RequestHandler = (req, res, next) => {
   const { id } = req.params;
-  console.log(id,'id')
   const { title, price, categories, imageUrl } = req.body;
-  Goods.update({ title, price, categories, imageUrl }, { where: { id: id } })
+  Product.update({ title, price, categories, imageUrl }, { where: { id: id } })
     .then(() => {
       res.send({ id });
     })

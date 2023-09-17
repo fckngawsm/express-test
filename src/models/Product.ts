@@ -10,9 +10,9 @@ const Categories = [
 
 @Table({
   timestamps: true,
-  tableName: "goods",
+  tableName: "product",
 })
-export class Goods extends Model {
+export class Product extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,

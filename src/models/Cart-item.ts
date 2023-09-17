@@ -1,11 +1,20 @@
 // @/models.ts
-import { Table, Model, Column, DataType } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  PrimaryKey,
+} from "sequelize-typescript";
 
 @Table({
   timestamps: true,
-  tableName: "cartItem",
+  tableName: "cart-item",
 })
 export class CartItem extends Model {
+  @PrimaryKey
+  @Column
+  readonly id!: bigint;
   @Column({
     type: DataType.INTEGER,
     allowNull: false,

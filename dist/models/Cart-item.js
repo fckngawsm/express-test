@@ -16,6 +16,11 @@ let CartItem = class CartItem extends sequelize_typescript_1.Model {
 };
 exports.CartItem = CartItem;
 __decorate([
+    sequelize_typescript_1.PrimaryKey,
+    sequelize_typescript_1.Column,
+    __metadata("design:type", typeof BigInt === "function" ? BigInt : Object)
+], CartItem.prototype, "id", void 0);
+__decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
         allowNull: false,
@@ -25,6 +30,6 @@ __decorate([
 exports.CartItem = CartItem = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: true,
-        tableName: "cartItem",
+        tableName: "cart-item",
     })
 ], CartItem);

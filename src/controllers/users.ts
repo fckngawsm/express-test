@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler } from "express";
+import { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
@@ -14,10 +14,9 @@ export const getAllUsers: RequestHandler = (_, res, next) => {
 
 export const createUser: RequestHandler = (req, res, next) => {
   const { name, lastname, email, password, isAdmin } = req.body;
-  bcrypt
+  return bcrypt
     .hash(password, 10)
-    .then((hash) =>
-      User.create({
+    .then((hash) => User.create({
         name,
         lastname,
         isAdmin,
@@ -27,12 +26,10 @@ export const createUser: RequestHandler = (req, res, next) => {
     )
     .then((user) =>
       res.send({
-        data: {
-          email: user.email,
-          name: user.name,
-          lastname: user.lastname,
-          isAdmin: user.isAdmin,
-        },
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email,
+        isAdmin: user.isAdmin,
       })
     )
     .catch((err) => {

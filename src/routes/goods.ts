@@ -5,7 +5,7 @@ import {
   deleteProductById,
   getAllGoods,
   updateProductById,
-} from "../controllers/goods";
+} from "../controllers/prdouct";
 
 const router = Router();
 
