@@ -71,13 +71,6 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.loginUser = loginUser;
-// export const getCurrentUser = (
-//   req: RequestCustom,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const { id } = req.user;
-//   User.findByPk(id).then((user) => {
-//     console.log(user);
-//   });
+// export const getCurrentUser: RequestHandler = (req, res, next) => {
+//   console.log(req.user);
 // };

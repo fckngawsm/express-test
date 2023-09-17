@@ -1,4 +1,4 @@
-import { NextFunction, RequestHandler } from "express";
+import { NextFunction, Request, RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
@@ -63,14 +63,6 @@ export const loginUser: RequestHandler = async (req, res, next) => {
   }
 };
 
-
-// export const getCurrentUser = (
-//   req: RequestCustom,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const { id } = req.user;
-//   User.findByPk(id).then((user) => {
-//     console.log(user);
-//   });
+// export const getCurrentUser: RequestHandler = (req, res, next) => {
+//   console.log(req.user);
 // };

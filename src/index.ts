@@ -10,13 +10,13 @@ import { User } from "./models/User";
 import { Goods } from "./models/Goods";
 import { Cart } from "./models/Cart";
 import { CartItem } from "./models/Cart-item";
-import { JwtPayload } from "jsonwebtoken";
 
 dotenv.config();
+
 declare global {
   namespace Express {
     interface Request {
-      token: JwtPayload | string;
+      user: User;
     }
   }
 }

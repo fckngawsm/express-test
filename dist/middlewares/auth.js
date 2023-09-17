@@ -25,15 +25,8 @@ const authenticateUserToken = (req, res, next) => __awaiter(void 0, void 0, void
     catch (error) {
         return next(new unauthorized_err_1.UnauthorizedError("Ввойдите в аккаунт"));
     }
-    req.token = payload;
-    // if (token) {
-    //   jwt.verify(token, "secret-key") => {
-    //     req.user = user;
-    //     next();
-    //   };
-    // } else {
-    //   next();
-    // }
+    req.user = payload;
+    console.log(req.user);
     return next();
 });
 exports.authenticateUserToken = authenticateUserToken;
