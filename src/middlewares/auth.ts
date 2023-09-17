@@ -1,27 +1,26 @@
-import jwt, { Secret, JwtPayload } from "jsonwebtoken";
-import { RequestHandler } from "express";
-import { UnauthorizedError } from "../utils/unauthorized-err";
+import jwt, { Secret } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import { RequestCustom } from "../utils/Types/CustomRequest";
 
-export const SECRET_KEY: Secret = "secret-key";
+export const SECRET_KEY: Secret = "your-secret-key-here";
 
-export const auth: RequestHandler = (req:any, _, next) => {
-  const { authorization } = req.headers;
-  const bearer = "Bearer ";
-
-  if (!authorization || !authorization.startsWith(bearer)) {
-    return next(new UnauthorizedError("Пользователя не существует"));
-  }
-
-  const token = authorization.replace(bearer, "");
-  let payload;
-
+export const auth = async (
+  req: RequestCustom,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    payload = jwt.verify(token, SECRET_KEY);
-  } catch (err) {
-    return next(new UnauthorizedError("Пользователя не существует"));
-  }
+    const token = req.header("Authorization")?.replace("Bearer ", "");
 
-  req.user = payload;
-  console.log(req.user)
-  return next();
+    if (!token) {
+      throw new Error("Oshibka");
+    }
+
+    const decoded = jwt.verify(token, SECRET_KEY);
+    req.token = decoded;
+
+    next();
+  } catch (err) {
+    res.status(401).send("Please authenticate");
+  }
 };
