@@ -23,13 +23,13 @@ export class Order extends Model {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
   })
   address!: string;
 
   @Column({
-    type: DataType.NUMBER,
-    allowNull: true,
+    type: DataType.INTEGER,
+    allowNull: false,
   })
-  phoneNumber!: number;
+  phone!: number;
 }

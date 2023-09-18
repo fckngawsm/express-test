@@ -36,20 +36,27 @@ app.post("/signup", createUser);
 app.use("/", router);
 
 User.hasOne(Cart);
+User.hasMany(Order);
+
 Cart.belongsTo(User);
-Product.belongsToMany(Cart, {
-  through: CartItem,
-});
 Cart.belongsToMany(Product, {
   through: CartItem,
 });
-// Order.belongsTo(User);
-// Order.belongsToMany(Product, {
-//   through: OrderItem,
-// });
+
+Product.belongsToMany(Cart, {
+  through: CartItem,
+});
+Product.belongsToMany(Order, {
+  through: OrderItem,
+});
+
+Order.belongsTo(User);
+Order.belongsToMany(Product, {
+  through: OrderItem,
+});
 
 connection
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("Database successfully connected");
   })

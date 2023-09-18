@@ -20,4 +20,10 @@ export class OrderItem extends Model {
     allowNull: true,
   })
   readonly id!: bigint;
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+  })
+  quantity!: number;
 }

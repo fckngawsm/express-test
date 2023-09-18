@@ -15,6 +15,8 @@ const User_1 = require("./models/User");
 const Product_1 = require("./models/Product");
 const Cart_1 = require("./models/Cart");
 const Cart_item_1 = require("./models/Cart-item");
+const Order_1 = require("./models/Order");
+const Order_item_1 = require("./models/Order-item");
 // import { CartItem } from "./models/Cart-item";
 dotenv_1.default.config();
 const port = process.env.PORT;
@@ -26,19 +28,23 @@ app.post("/signin", users_1.loginUser);
 app.post("/signup", users_1.createUser);
 app.use("/", routes_1.router);
 User_1.User.hasOne(Cart_1.Cart);
+User_1.User.hasMany(Order_1.Order);
 Cart_1.Cart.belongsTo(User_1.User);
-Product_1.Product.belongsToMany(Cart_1.Cart, {
-    through: Cart_item_1.CartItem,
-});
 Cart_1.Cart.belongsToMany(Product_1.Product, {
     through: Cart_item_1.CartItem,
 });
-// Order.belongsTo(User);
-// Order.belongsToMany(Product, {
-//   through: OrderItem,
-// });
+Product_1.Product.belongsToMany(Cart_1.Cart, {
+    through: Cart_item_1.CartItem,
+});
+Product_1.Product.belongsToMany(Order_1.Order, {
+    through: Order_item_1.OrderItem,
+});
+Order_1.Order.belongsTo(User_1.User);
+Order_1.Order.belongsToMany(Product_1.Product, {
+    through: Order_item_1.OrderItem,
+});
 db_config_1.default
-    .sync()
+    .sync({ force: true })
     .then(() => {
     console.log("Database successfully connected");
 })

@@ -27,17 +27,17 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
-        allowNull: true,
+        allowNull: false,
     }),
     __metadata("design:type", String)
 ], Order.prototype, "address", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.NUMBER,
-        allowNull: true,
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false,
     }),
     __metadata("design:type", Number)
-], Order.prototype, "phoneNumber", void 0);
+], Order.prototype, "phone", void 0);
 exports.Order = Order = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: true,

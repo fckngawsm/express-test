@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
 import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
-import { log } from "console";
 
 export const getUserCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
