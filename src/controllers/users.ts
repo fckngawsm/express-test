@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 import { BadRequestError } from "../utils/bad-request-err";
+import { Cart } from "../models/Cart";
 
 export const getAllUsers: RequestHandler = (_, res, next) => {
   User.findAll({})
@@ -12,29 +13,28 @@ export const getAllUsers: RequestHandler = (_, res, next) => {
     .catch(next);
 };
 
-export const createUser: RequestHandler = (req, res, next) => {
+export const createUser: RequestHandler = async (req, res, next) => {
   const { name, lastname, email, password, isAdmin } = req.body;
-  return bcrypt
-    .hash(password, 10)
-    .then((hash) => User.create({
-        name,
-        lastname,
-        isAdmin,
-        email,
-        password: hash,
-      })
-    )
-    .then((user) =>
-      res.send({
-        name: user.name,
-        lastname: user.lastname,
-        email: user.email,
-        isAdmin: user.isAdmin,
-      })
-    )
-    .catch((err) => {
-      next(err);
+  try {
+    let hashPassword = await bcrypt.hash(password, 12);
+    const user = await User.create({
+      name,
+      lastname,
+      isAdmin,
+      email,
+      password: hashPassword,
     });
+    await user.save();
+    await Cart.create({
+      UserId: user.id,
+    });
+    res.json({
+      message: "user fulfield created",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 };
 
 export const loginUser: RequestHandler = async (req, res, next) => {

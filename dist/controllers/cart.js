@@ -1,5 +1,12 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.addItemToCart = void 0;
-const addItemToCart = (req, res, next) => { };
-exports.addItemToCart = addItemToCart;
+// import { RequestHandler } from "express";
+// import { Cart } from "../models/Cart";
+// export const getProductfromCart: RequestHandler = (req, res, next) => {
+//   Cart.findAll({})
+//     .then((cart) => {
+//       res.send(cart);
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// };

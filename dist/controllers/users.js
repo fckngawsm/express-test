@@ -28,6 +28,7 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const bad_request_err_1 = require("../utils/bad-request-err");
+const Cart_1 = require("../models/Cart");
 const getAllUsers = (_, res, next) => {
     User_1.User.findAll({})
         .then((user) => {
@@ -36,27 +37,30 @@ const getAllUsers = (_, res, next) => {
         .catch(next);
 };
 exports.getAllUsers = getAllUsers;
-const createUser = (req, res, next) => {
+const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, lastname, email, password, isAdmin } = req.body;
-    return bcryptjs_1.default
-        .hash(password, 10)
-        .then((hash) => User_1.User.create({
-        name,
-        lastname,
-        isAdmin,
-        email,
-        password: hash,
-    }))
-        .then((user) => res.send({
-        name: user.name,
-        lastname: user.lastname,
-        email: user.email,
-        isAdmin: user.isAdmin,
-    }))
-        .catch((err) => {
-        next(err);
-    });
-};
+    try {
+        let hashPassword = yield bcryptjs_1.default.hash(password, 12);
+        const user = yield User_1.User.create({
+            name,
+            lastname,
+            isAdmin,
+            email,
+            password: hashPassword,
+        });
+        yield user.save();
+        yield Cart_1.Cart.create({
+            UserId: user.id,
+        });
+        res.json({
+            message: "user fulfield created",
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
 exports.createUser = createUser;
 const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
