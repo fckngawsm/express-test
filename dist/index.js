@@ -33,9 +33,9 @@ Product_1.Product.belongsToMany(Cart_1.Cart, {
 Cart_1.Cart.belongsToMany(Product_1.Product, {
     through: Cart_item_1.CartItem,
 });
-// Cart.belongsToMany(Goods, {
-//   through: CartItem,
-//   foreignKey: "id",
+// Order.belongsTo(User);
+// Order.belongsToMany(Product, {
+//   through: OrderItem,
 // });
 db_config_1.default
     .sync()

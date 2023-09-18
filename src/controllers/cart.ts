@@ -2,6 +2,18 @@ import { RequestHandler } from "express";
 import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
 
+export const getUserCart: RequestHandler = async (req, res, next) => {
+  const { id } = req.user;
+
+  CartItem.findAll({ where: { CartId: id } })
+    .then((cart) => {
+      res.send(cart);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 export const addItemToCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
   const { ProductId } = req.body;

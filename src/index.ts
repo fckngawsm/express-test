@@ -10,6 +10,8 @@ import { User } from "./models/User";
 import { Product } from "./models/Product";
 import { Cart } from "./models/Cart";
 import { CartItem } from "./models/Cart-item";
+import { Order } from "./models/Order";
+import { OrderItem } from "./models/Order-item";
 // import { CartItem } from "./models/Cart-item";
 
 dotenv.config();
@@ -35,16 +37,15 @@ app.use("/", router);
 
 User.hasOne(Cart);
 Cart.belongsTo(User);
-
 Product.belongsToMany(Cart, {
   through: CartItem,
 });
 Cart.belongsToMany(Product, {
   through: CartItem,
 });
-// Cart.belongsToMany(Goods, {
-//   through: CartItem,
-//   foreignKey: "id",
+// Order.belongsTo(User);
+// Order.belongsToMany(Product, {
+//   through: OrderItem,
 // });
 
 connection

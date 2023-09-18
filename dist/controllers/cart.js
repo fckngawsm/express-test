@@ -9,9 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addItemToCart = void 0;
+exports.addItemToCart = exports.getUserCart = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
+const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.user;
+    Cart_item_1.CartItem.findAll({ where: { CartId: id } })
+        .then((cart) => {
+        res.send(cart);
+    })
+        .catch((err) => {
+        next(err);
+    });
+});
+exports.getUserCart = getUserCart;
 const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
     const { ProductId } = req.body;
