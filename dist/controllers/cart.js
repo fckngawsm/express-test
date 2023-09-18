@@ -19,7 +19,7 @@ const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.send(cart);
     })
         .catch((err) => {
-        next(err);
+        console.log(err);
     });
 });
 exports.getUserCart = getUserCart;
