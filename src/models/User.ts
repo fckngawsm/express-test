@@ -15,7 +15,10 @@ import {
 export class User extends Model {
   @AutoIncrement
   @PrimaryKey
-  @Column
+  @Column({
+    type: DataType.BIGINT,
+    allowNull: true,
+  })
   readonly id!: bigint;
 
   @Column({

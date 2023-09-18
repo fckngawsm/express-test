@@ -9,12 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Order = void 0;
 // @/models.ts
 const sequelize_typescript_1 = require("sequelize-typescript");
-let User = class User extends sequelize_typescript_1.Model {
+let Order = class Order extends sequelize_typescript_1.Model {
 };
-exports.User = User;
+exports.Order = Order;
 __decorate([
     sequelize_typescript_1.AutoIncrement,
     sequelize_typescript_1.PrimaryKey,
@@ -23,46 +23,24 @@ __decorate([
         allowNull: true,
     }),
     __metadata("design:type", typeof BigInt === "function" ? BigInt : Object)
-], User.prototype, "id", void 0);
+], Order.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "name", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "lastname", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.BOOLEAN,
         allowNull: true,
-        defaultValue: false,
     }),
-    __metadata("design:type", Boolean)
-], User.prototype, "isAdmin", void 0);
-exports.User = User = __decorate([
+    __metadata("design:type", String)
+], Order.prototype, "address", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.NUMBER,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], Order.prototype, "phoneNumber", void 0);
+exports.Order = Order = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: true,
-        tableName: "users",
+        tableName: "order",
     })
-], User);
+], Order);
