@@ -16,6 +16,12 @@ let User = class User extends sequelize_typescript_1.Model {
 };
 exports.User = User;
 __decorate([
+    sequelize_typescript_1.AutoIncrement,
+    sequelize_typescript_1.PrimaryKey,
+    sequelize_typescript_1.Column,
+    __metadata("design:type", typeof BigInt === "function" ? BigInt : Object)
+], User.prototype, "id", void 0);
+__decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
         allowNull: false,

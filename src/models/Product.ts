@@ -1,5 +1,5 @@
 // @/models.ts
-import { Table, Model, Column, DataType } from "sequelize-typescript";
+import { Table, Model, Column, DataType, PrimaryKey, AutoIncrement } from "sequelize-typescript";
 
 const Categories = [
   "книги",
@@ -13,6 +13,14 @@ const Categories = [
   tableName: "product",
 })
 export class Product extends Model {
+  @AutoIncrement
+  @PrimaryKey
+  @Column({
+    type: DataType.BIGINT,
+    allowNull: true,
+  })
+  readonly id!: bigint;
+
   @Column({
     type: DataType.STRING,
     allowNull: false,

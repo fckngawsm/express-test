@@ -54,6 +54,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         });
         res.json({
             message: "user fulfield created",
+            userId: `user id ${user.id}`,
         });
     }
     catch (error) {

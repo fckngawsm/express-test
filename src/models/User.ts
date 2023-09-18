@@ -1,11 +1,23 @@
 // @/models.ts
-import { Table, Model, Column, DataType } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+} from "sequelize-typescript";
 
 @Table({
   timestamps: true,
   tableName: "users",
 })
 export class User extends Model {
+  @AutoIncrement
+  @PrimaryKey
+  @Column
+  readonly id!: bigint;
+
   @Column({
     type: DataType.STRING,
     allowNull: false,

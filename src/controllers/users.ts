@@ -30,6 +30,7 @@ export const createUser: RequestHandler = async (req, res, next) => {
     });
     res.json({
       message: "user fulfield created",
+      userId: `user id ${user.id}`,
     });
   } catch (error) {
     console.log(error);
