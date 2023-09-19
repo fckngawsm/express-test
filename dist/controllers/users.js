@@ -49,16 +49,20 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             password: hashPassword,
         });
         yield user.save();
-        yield Cart_1.Cart.create({
-            UserId: user.id,
-        });
-        res.json({
-            message: "user fulfield created",
-            userId: `user id ${user.id}`,
-        });
+        if (user) {
+            yield Cart_1.Cart.create({
+                UserId: user.id,
+            });
+            res.json({
+                message: "user fulfield created",
+                userId: `user id ${user.id}`,
+            });
+        }
+        else {
+            throw new bad_request_err_1.BadRequestError("Проверьте введенные данные");
+        }
     }
     catch (error) {
-        console.log(error);
         next(error);
     }
 });

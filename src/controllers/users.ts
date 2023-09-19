@@ -25,15 +25,18 @@ export const createUser: RequestHandler = async (req, res, next) => {
       password: hashPassword,
     });
     await user.save();
-    await Cart.create({
-      UserId: user.id,
-    });
-    res.json({
-      message: "user fulfield created",
-      userId: `user id ${user.id}`,
-    });
+    if (user) {
+      await Cart.create({
+        UserId: user.id,
+      });
+      res.json({
+        message: "user fulfield created",
+        userId: `user id ${user.id}`,
+      });
+    } else {
+      throw new BadRequestError("Проверьте введенные данные");
+    }
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
