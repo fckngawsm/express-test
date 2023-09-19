@@ -44,7 +44,7 @@ Order_1.Order.belongsToMany(Product_1.Product, {
     through: Order_item_1.OrderItem,
 });
 db_config_1.default
-    .sync({ force: true })
+    .sync()
     .then(() => {
     console.log("Database successfully connected");
 })

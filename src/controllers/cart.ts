@@ -22,7 +22,6 @@ export const addItemToCart: RequestHandler = async (req, res, next) => {
       ProductId,
       CartId: cart?.dataValues.id,
     });
-    console.log(cart);
     addItem.save();
     res.json({
       message: "Вы успешно добавили товар в корзину",

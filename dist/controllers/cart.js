@@ -32,7 +32,6 @@ const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             ProductId,
             CartId: cart === null || cart === void 0 ? void 0 : cart.dataValues.id,
         });
-        console.log(cart);
         addItem.save();
         res.json({
             message: "Вы успешно добавили товар в корзину",

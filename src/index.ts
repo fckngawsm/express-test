@@ -56,7 +56,7 @@ Order.belongsToMany(Product, {
 });
 
 connection
-  .sync({ force: true })
+  .sync()
   .then(() => {
     console.log("Database successfully connected");
   })

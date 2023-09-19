@@ -28,8 +28,8 @@ export class Order extends Model {
   address!: string;
 
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false,
   })
-  phone!: number;
+  phone!: string;
 }

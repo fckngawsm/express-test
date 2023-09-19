@@ -50,8 +50,8 @@ const updateProductById = (req, res, next) => {
     const { id } = req.params;
     const { title, price, categories, imageUrl } = req.body;
     Product_1.Product.update({ title, price, categories, imageUrl }, { where: { id: id } })
-        .then(() => {
-        res.send({ id });
+        .then((product) => {
+        res.send(product);
     })
         .catch((err) => {
         next(err);

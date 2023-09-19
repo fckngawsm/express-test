@@ -51,8 +51,8 @@ export const updateProductById: RequestHandler = (req, res, next) => {
   const { id } = req.params;
   const { title, price, categories, imageUrl } = req.body;
   Product.update({ title, price, categories, imageUrl }, { where: { id: id } })
-    .then(() => {
-      res.send({ id });
+    .then((product) => {
+      res.send(product);
     })
     .catch((err) => {
       next(err);

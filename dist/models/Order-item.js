@@ -24,14 +24,6 @@ __decorate([
     }),
     __metadata("design:type", typeof BigInt === "function" ? BigInt : Object)
 ], OrderItem.prototype, "id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.INTEGER,
-        allowNull: false,
-        defaultValue: 1,
-    }),
-    __metadata("design:type", Number)
-], OrderItem.prototype, "quantity", void 0);
 exports.OrderItem = OrderItem = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: true,
