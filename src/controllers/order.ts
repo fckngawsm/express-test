@@ -3,6 +3,8 @@ import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
 import { Order } from "../models/Order";
 import { OrderItem } from "../models/Order-item";
+import { NotFoundError } from "../utils/not-found-err";
+import { BadRequestError } from "../utils/bad-request-err";
 
 export const getAllOrders: RequestHandler = (_, res, next) => {
   // const { id } = req.user;
@@ -39,27 +41,35 @@ export const addItemToOrder: RequestHandler = async (req, res, next) => {
     // корзина
     const cart = await Cart.findOne({ where: { UserId: id } });
     // товары принадлежат текущему пользователю
-    const cartItem = await CartItem.findAll({
-      where: { cartId: cart?.dataValues.id },
-    });
-    // создание корзины
-    const order = await Order.create({
-      phone,
-      address,
-      UserId: id,
-    });
-    order.save();
-    // не нашел лучшего способа чем этот :(
-    cartItem.map((item) => {
-      OrderInformation = OrderItem.create({
-        ProductId: item.dataValues.ProductId,
-        OrderId: order.id,
+    if (cart) {
+      const cartItem = await CartItem.findAll({
+        where: { cartId: cart.dataValues.id },
       });
-      return OrderInformation;
-    });
-    res.json({
-      message: "Заказ успешно выполнен",
-    });
+      // создание корзины
+      const order = await Order.create({
+        phone,
+        address,
+        UserId: id,
+      });
+      order.save();
+      if (order) {
+        // не нашел лучшего способа чем этот :(
+        cartItem.map((item) => {
+          OrderInformation = OrderItem.create({
+            ProductId: item.dataValues.ProductId,
+            OrderId: order.id,
+          });
+          return OrderInformation;
+        });
+        res.json({
+          message: "Заказ успешно выполнен",
+        });
+      } else {
+        throw new BadRequestError("Не удалось создать заказ");
+      }
+    } else {
+      throw new NotFoundError("Не удалось найти корзину");
+    }
   } catch (error) {
     next(error);
   }

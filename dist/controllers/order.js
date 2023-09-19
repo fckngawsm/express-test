@@ -14,6 +14,8 @@ const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const Order_1 = require("../models/Order");
 const Order_item_1 = require("../models/Order-item");
+const not_found_err_1 = require("../utils/not-found-err");
+const bad_request_err_1 = require("../utils/bad-request-err");
 const getAllOrders = (_, res, next) => {
     // const { id } = req.user;
     Order_1.Order.findAll({})
@@ -49,27 +51,37 @@ const addItemToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         // корзина
         const cart = yield Cart_1.Cart.findOne({ where: { UserId: id } });
         // товары принадлежат текущему пользователю
-        const cartItem = yield Cart_item_1.CartItem.findAll({
-            where: { cartId: cart === null || cart === void 0 ? void 0 : cart.dataValues.id },
-        });
-        // создание корзины
-        const order = yield Order_1.Order.create({
-            phone,
-            address,
-            UserId: id,
-        });
-        order.save();
-        // не нашел лучшего способа чем этот :(
-        cartItem.map((item) => {
-            OrderInformation = Order_item_1.OrderItem.create({
-                ProductId: item.dataValues.ProductId,
-                OrderId: order.id,
+        if (cart) {
+            const cartItem = yield Cart_item_1.CartItem.findAll({
+                where: { cartId: cart.dataValues.id },
             });
-            return OrderInformation;
-        });
-        res.json({
-            message: "Заказ успешно выполнен",
-        });
+            // создание корзины
+            const order = yield Order_1.Order.create({
+                phone,
+                address,
+                UserId: id,
+            });
+            order.save();
+            if (order) {
+                // не нашел лучшего способа чем этот :(
+                cartItem.map((item) => {
+                    OrderInformation = Order_item_1.OrderItem.create({
+                        ProductId: item.dataValues.ProductId,
+                        OrderId: order.id,
+                    });
+                    return OrderInformation;
+                });
+                res.json({
+                    message: "Заказ успешно выполнен",
+                });
+            }
+            else {
+                throw new bad_request_err_1.BadRequestError("Не удалось создать заказ");
+            }
+        }
+        else {
+            throw new not_found_err_1.NotFoundError("Не удалось найти корзину");
+        }
     }
     catch (error) {
         next(error);
