@@ -13,7 +13,8 @@
     /* Language and Environment */
     "target": "es6", // or a more recent ecmascript version
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,                                 /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "emitDecoratorMetadata": true, 
+    "useUnknownInCatchVariables": false,                                /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     // "jsx": "preserve",                                /* Specify what JSX code is generated. */
     // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */

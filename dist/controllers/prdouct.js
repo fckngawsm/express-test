@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateProductById = exports.deleteProductById = exports.createGoods = exports.getAllGoods = void 0;
 const Product_1 = require("../models/Product");
+// import { BadRequestError } from "../utils/bad-request-err";
 const getAllGoods = (req, res, next) => {
     Product_1.Product.findAll({})
         .then((product) => {

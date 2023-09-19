@@ -8,7 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = require("body-parser");
 const db_config_1 = __importDefault(require("./config/db-config"));
 const routes_1 = require("./routes");
-const sendError_1 = require("./middlewares/sendError");
+const sendError_1 = __importDefault(require("./middlewares/sendError"));
 const users_1 = require("./controllers/users");
 const cors_1 = __importDefault(require("cors"));
 const User_1 = require("./models/User");
@@ -27,6 +27,7 @@ app.use((0, body_parser_1.urlencoded)({ extended: true }));
 app.post("/signin", users_1.loginUser);
 app.post("/signup", users_1.createUser);
 app.use("/", routes_1.router);
+app.use(sendError_1.default);
 User_1.User.hasOne(Cart_1.Cart);
 User_1.User.hasMany(Order_1.Order);
 Cart_1.Cart.belongsTo(User_1.User);
@@ -51,7 +52,6 @@ db_config_1.default
     .catch((err) => {
     console.log("Error", err);
 });
-app.use(sendError_1.handleSendError);
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });

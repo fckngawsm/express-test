@@ -1,5 +1,6 @@
-import { RequestHandler } from "express";
+import e, { RequestHandler } from "express";
 import { Product } from "../models/Product";
+// import { BadRequestError } from "../utils/bad-request-err";
 
 export const getAllGoods: RequestHandler = (req, res, next) => {
   Product.findAll({})

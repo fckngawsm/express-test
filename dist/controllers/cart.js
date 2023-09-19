@@ -13,6 +13,7 @@ exports.addItemToCart = exports.getUserCart = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const not_found_err_1 = require("../utils/not-found-err");
+const bad_request_err_1 = require("../utils/bad-request-err");
 const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
     Cart_item_1.CartItem.findAll({ where: { CartId: id } })
@@ -45,6 +46,9 @@ const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         }
     }
     catch (err) {
+        if (err instanceof Error && err.name === "ValidationError") {
+            return next(new bad_request_err_1.BadRequestError("Ошибка валидации"));
+        }
         next(err);
     }
 });

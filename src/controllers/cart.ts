@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
 import { NotFoundError } from "../utils/not-found-err";
+import { BadRequestError } from "../utils/bad-request-err";
 
 export const getUserCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
@@ -33,6 +34,9 @@ export const addItemToCart: RequestHandler = async (req, res, next) => {
       throw new NotFoundError("Не удалось найти корзину");
     }
   } catch (err) {
+    if (err instanceof Error && err.name === "ValidationError") {
+      return next(new BadRequestError("Ошибка валидации"));
+    }
     next(err);
   }
 };

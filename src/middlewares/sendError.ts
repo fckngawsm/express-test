@@ -1,14 +1,18 @@
 import { NextFunction, Request, Response } from "express";
+import HttpException from "../utils/custom-err";
 
-export const handleSendError = (
-  err: any,
-  _: Request,
-  res: Response,
+function errorMiddleware(
+  error: HttpException,
+  request: Request,
+  response: Response,
   next: NextFunction
-) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({ message: statusCode === 500 ? "Internal Server Error" : message });
-  next();
-};
+) {
+  const status = error.status || 500;
+  const message = error.message || "Something went wrong";
+  response.status(status).send({
+    status,
+    message,
+  });
+}
+
+export default errorMiddleware;

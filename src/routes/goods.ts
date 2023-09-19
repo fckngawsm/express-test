@@ -6,12 +6,16 @@ import {
   getAllGoods,
   updateProductById,
 } from "../controllers/prdouct";
+import {
+  celebrateCreateProduct,
+  celebrateUpdateProduct,
+} from "../utils/celebrate";
 
 const router = Router();
 
 router.get("/", getAllGoods);
-router.post("/", createGoods);
-router.delete("/:id", deleteProductById);
-router.patch("/:id", updateProductById);
+router.post("/", celebrateCreateProduct, createGoods);
+router.delete("/:id", deleteProductById); // исправить логику
+router.patch("/:id", celebrateUpdateProduct, updateProductById);
 
 export default router;

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { json, urlencoded } from "body-parser";
 import connection from "./config/db-config";
 import { router } from "./routes";
-import { handleSendError } from "./middlewares/sendError";
+import handleError from "./middlewares/sendError";
 import { createUser, loginUser } from "./controllers/users";
 import cors from "cors";
 import { User } from "./models/User";
@@ -34,7 +34,7 @@ app.post("/signin", loginUser);
 app.post("/signup", createUser);
 
 app.use("/", router);
-
+app.use(handleError); 
 User.hasOne(Cart);
 User.hasMany(Order);
 
@@ -54,7 +54,6 @@ Order.belongsTo(User);
 Order.belongsToMany(Product, {
   through: OrderItem,
 });
-
 connection
   .sync()
   .then(() => {
@@ -63,8 +62,6 @@ connection
   .catch((err) => {
     console.log("Error", err);
   });
-
-app.use(handleSendError);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
