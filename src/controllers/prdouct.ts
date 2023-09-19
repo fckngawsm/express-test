@@ -33,7 +33,7 @@ export const createGoods: RequestHandler = (req, res, next) => {
       })
     )
     .catch((err) => {
-      next(err);
+      return next(err);
     });
 };
 
@@ -44,7 +44,7 @@ export const deleteProductById: RequestHandler = (req, res, next) => {
       res.send({ id });
     })
     .catch((err) => {
-      next(err);
+      return next(err);
     });
 };
 
@@ -56,6 +56,6 @@ export const updateProductById: RequestHandler = (req, res, next) => {
       res.send(product);
     })
     .catch((err) => {
-      next(err);
+      return next(err);
     });
 };

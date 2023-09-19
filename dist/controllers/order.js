@@ -14,7 +14,6 @@ const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const Order_1 = require("../models/Order");
 const Order_item_1 = require("../models/Order-item");
-const not_found_err_1 = require("../utils/not-found-err");
 const bad_request_err_1 = require("../utils/bad-request-err");
 const getAllOrders = (_, res, next) => {
     // const { id } = req.user;
@@ -76,15 +75,15 @@ const addItemToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                 });
             }
             else {
-                throw new bad_request_err_1.BadRequestError("Не удалось создать заказ");
+                return next(new bad_request_err_1.BadRequestError("Не удалось создать заказ"));
             }
         }
         else {
-            throw new not_found_err_1.NotFoundError("Не удалось найти корзину");
+            return next(new bad_request_err_1.BadRequestError("Не удалось найти корзину"));
         }
     }
     catch (error) {
-        next(error);
+        return next(error);
     }
 });
 exports.addItemToOrder = addItemToOrder;

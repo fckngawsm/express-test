@@ -32,7 +32,7 @@ const createGoods = (req, res, next) => {
         },
     }))
         .catch((err) => {
-        next(err);
+        return next(err);
     });
 };
 exports.createGoods = createGoods;
@@ -43,7 +43,7 @@ const deleteProductById = (req, res, next) => {
         res.send({ id });
     })
         .catch((err) => {
-        next(err);
+        return next(err);
     });
 };
 exports.deleteProductById = deleteProductById;
@@ -55,7 +55,7 @@ const updateProductById = (req, res, next) => {
         res.send(product);
     })
         .catch((err) => {
-        next(err);
+        return next(err);
     });
 };
 exports.updateProductById = updateProductById;

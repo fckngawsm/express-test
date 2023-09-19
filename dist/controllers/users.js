@@ -29,6 +29,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const bad_request_err_1 = require("../utils/bad-request-err");
 const Cart_1 = require("../models/Cart");
+const not_found_err_1 = require("../utils/not-found-err");
 const getAllUsers = (_, res, next) => {
     User_1.User.findAll({})
         .then((user) => {
@@ -59,7 +60,8 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             });
         }
         else {
-            throw new bad_request_err_1.BadRequestError("Проверьте введенные данные");
+            // throw new BadRequestError("Проверьте введенные данные");
+            return next(new bad_request_err_1.BadRequestError("Проверьте введенные данные"));
         }
     }
     catch (error) {
@@ -82,12 +84,11 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             res.json(Object.assign({ token }, userData));
         }
         else {
-            throw new bad_request_err_1.BadRequestError("Проверьте введенные данsные");
+            console.log("ss");
+            return next(new not_found_err_1.NotFoundError("Проверьте пароль"));
         }
     }
-    else {
-        next();
-    }
+    return next(new not_found_err_1.NotFoundError("Проверьте введенные данные"));
 });
 exports.loginUser = loginUser;
 const getCurrentUser = (req, res, next) => {

@@ -34,6 +34,7 @@ app.post("/signin", loginUser);
 app.post("/signup", createUser);
 
 app.use("/", router);
+
 app.use(handleError); 
 User.hasOne(Cart);
 User.hasMany(Order);

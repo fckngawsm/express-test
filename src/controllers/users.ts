@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 import { BadRequestError } from "../utils/bad-request-err";
 import { Cart } from "../models/Cart";
+import { NotFoundError } from "../utils/not-found-err";
 
 export const getAllUsers: RequestHandler = (_, res, next) => {
   User.findAll({})
@@ -34,7 +35,8 @@ export const createUser: RequestHandler = async (req, res, next) => {
         userId: `user id ${user.id}`,
       });
     } else {
-      throw new BadRequestError("Проверьте введенные данные");
+      // throw new BadRequestError("Проверьте введенные данные");
+      return next(new BadRequestError("Проверьте введенные данные"));
     }
   } catch (error) {
     next(error);
@@ -58,11 +60,11 @@ export const loginUser: RequestHandler = async (req, res, next) => {
       const { password, ...userData } = user.dataValues;
       res.json({ token, ...userData });
     } else {
-      throw new BadRequestError("Проверьте введенные данsные");
+      console.log("ss");
+      return next(new NotFoundError("Проверьте пароль"));
     }
-  } else {
-    next();
   }
+  return next(new NotFoundError("Проверьте введенные данные"));
 };
 
 export const getCurrentUser: RequestHandler = (req, res, next) => {

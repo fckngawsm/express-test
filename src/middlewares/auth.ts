@@ -17,6 +17,5 @@ export const authenticateUserToken = async (
     return next(new UnauthorizedError("Ввойдите в аккаунт"));
   }
   req.user = payload as User;
-  console.log(req.user);
   return next();
 };

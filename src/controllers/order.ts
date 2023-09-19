@@ -65,12 +65,12 @@ export const addItemToOrder: RequestHandler = async (req, res, next) => {
           message: "Заказ успешно выполнен",
         });
       } else {
-        throw new BadRequestError("Не удалось создать заказ");
+        return next(new BadRequestError("Не удалось создать заказ"));
       }
     } else {
-      throw new NotFoundError("Не удалось найти корзину");
+      return next(new BadRequestError("Не удалось найти корзину"));
     }
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };

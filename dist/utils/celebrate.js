@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.celebrateUpdateProduct = exports.celebrateCreateProduct = void 0;
 const { celebrate, Joi } = require("celebrate");
+// product
 exports.celebrateCreateProduct = celebrate({
     body: Joi.object().keys({
         title: Joi.string().min(2).max(30).required(),
@@ -24,3 +25,4 @@ exports.celebrateUpdateProduct = celebrate({
             .required(),
     }),
 });
+// 

@@ -11,7 +11,7 @@ export const getUserCart: RequestHandler = async (req, res, next) => {
       res.send(cart);
     })
     .catch((err) => {
-      console.log(err);
+      next(err);
     });
 };
 
@@ -31,13 +31,10 @@ export const addItemToCart: RequestHandler = async (req, res, next) => {
         addItem,
       });
     } else {
-      throw new NotFoundError("Не удалось найти корзину");
+      return next(new NotFoundError("корзина не найдена"));
     }
-  } catch (err) {
-    if (err instanceof Error && err.name === "ValidationError") {
-      return next(new BadRequestError("Ошибка валидации"));
-    }
-    next(err);
+  } catch (error) {
+    return next(error);
   }
 };
 
