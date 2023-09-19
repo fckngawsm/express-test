@@ -9,11 +9,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addItemToOrder = void 0;
+exports.addItemToOrder = exports.getOrderByUserId = exports.getAllOrders = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const Order_1 = require("../models/Order");
 const Order_item_1 = require("../models/Order-item");
+const getAllOrders = (_, res, next) => {
+    // const { id } = req.user;
+    Order_1.Order.findAll({})
+        .then((order) => {
+        res.json({
+            data: order,
+        });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.getAllOrders = getAllOrders;
+const getOrderByUserId = (req, res, next) => {
+    const { id } = req.user;
+    Order_1.Order.findAll({ where: { UserId: id } })
+        .then((order) => {
+        res.json({
+            data: order,
+        });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.getOrderByUserId = getOrderByUserId;
 const addItemToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
     const { phone, address } = req.body;
@@ -32,6 +58,7 @@ const addItemToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             UserId: id,
         });
         order.save();
+        // не нашел лучшего способа чем этот :(
         cartItem.map((item) => {
             OrderInformation = Order_item_1.OrderItem.create({
                 ProductId: item.dataValues.ProductId,
@@ -44,7 +71,7 @@ const addItemToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         });
     }
     catch (error) {
-        console.log(error);
+        next(error);
     }
 });
 exports.addItemToOrder = addItemToOrder;

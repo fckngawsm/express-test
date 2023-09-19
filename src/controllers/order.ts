@@ -4,6 +4,32 @@ import { CartItem } from "../models/Cart-item";
 import { Order } from "../models/Order";
 import { OrderItem } from "../models/Order-item";
 
+export const getAllOrders: RequestHandler = (_, res, next) => {
+  // const { id } = req.user;
+  Order.findAll({})
+    .then((order) => {
+      res.json({
+        data: order,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+export const getOrderByUserId: RequestHandler = (req, res, next) => {
+  const { id } = req.user;
+  Order.findAll({ where: { UserId: id } })
+    .then((order) => {
+      res.json({
+        data: order,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 export const addItemToOrder: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
   const { phone, address } = req.body;
@@ -22,6 +48,7 @@ export const addItemToOrder: RequestHandler = async (req, res, next) => {
       UserId: id,
     });
     order.save();
+    // не нашел лучшего способа чем этот :(
     cartItem.map((item) => {
       OrderInformation = OrderItem.create({
         ProductId: item.dataValues.ProductId,
@@ -33,6 +60,6 @@ export const addItemToOrder: RequestHandler = async (req, res, next) => {
       message: "Заказ успешно выполнен",
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
