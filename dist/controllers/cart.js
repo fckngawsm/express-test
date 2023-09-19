@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addItemToCart = exports.getUserCart = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
+const not_found_err_1 = require("../utils/not-found-err");
 const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
     Cart_item_1.CartItem.findAll({ where: { CartId: id } })
@@ -28,15 +29,20 @@ const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const { ProductId } = req.body;
     try {
         const cart = yield Cart_1.Cart.findOne({ where: { UserId: id } });
-        const addItem = yield Cart_item_1.CartItem.create({
-            ProductId,
-            CartId: cart === null || cart === void 0 ? void 0 : cart.dataValues.id,
-        });
-        addItem.save();
-        res.json({
-            message: "Вы успешно добавили товар в корзину",
-            addItem,
-        });
+        if (cart) {
+            const addItem = yield Cart_item_1.CartItem.create({
+                ProductId,
+                CartId: cart.dataValues.id,
+            });
+            addItem.save();
+            res.json({
+                message: "Вы успешно добавили товар в корзину",
+                addItem,
+            });
+        }
+        else {
+            throw new not_found_err_1.NotFoundError("Не удалось найти корзину");
+        }
     }
     catch (err) {
         next(err);

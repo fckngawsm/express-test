@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
+import { NotFoundError } from "../utils/not-found-err";
 
 export const getUserCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
@@ -18,15 +19,19 @@ export const addItemToCart: RequestHandler = async (req, res, next) => {
   const { ProductId } = req.body;
   try {
     const cart = await Cart.findOne({ where: { UserId: id } });
-    const addItem = await CartItem.create({
-      ProductId,
-      CartId: cart?.dataValues.id,
-    });
-    addItem.save();
-    res.json({
-      message: "Вы успешно добавили товар в корзину",
-      addItem,
-    });
+    if (cart) {
+      const addItem = await CartItem.create({
+        ProductId,
+        CartId: cart.dataValues.id,
+      });
+      addItem.save();
+      res.json({
+        message: "Вы успешно добавили товар в корзину",
+        addItem,
+      });
+    } else {
+      throw new NotFoundError("Не удалось найти корзину");
+    }
   } catch (err) {
     next(err);
   }
