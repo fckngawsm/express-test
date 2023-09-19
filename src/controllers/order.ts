@@ -19,6 +19,7 @@ export const getAllOrders: RequestHandler = (_, res, next) => {
 
 export const getOrderByUserId: RequestHandler = (req, res, next) => {
   const { id } = req.user;
+  console.log(id);
   Order.findAll({ where: { UserId: id } })
     .then((order) => {
       res.json({

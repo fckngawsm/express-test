@@ -29,6 +29,7 @@ const getAllOrders = (_, res, next) => {
 exports.getAllOrders = getAllOrders;
 const getOrderByUserId = (req, res, next) => {
     const { id } = req.user;
+    console.log(id);
     Order_1.Order.findAll({ where: { UserId: id } })
         .then((order) => {
         res.json({
