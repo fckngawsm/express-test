@@ -39,4 +39,20 @@ export const celebrateUpdateProduct = celebrate({
   }),
 });
 
-// 
+// user
+
+export const celebrateCreateUser = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    lastname: Joi.string().min(2).max(30),
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
+  }),
+});
+
+export const celebrateLoginUser = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
+  }),
+});

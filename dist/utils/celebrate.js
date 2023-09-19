@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.celebrateUpdateProduct = exports.celebrateCreateProduct = void 0;
+exports.celebrateLoginUser = exports.celebrateCreateUser = exports.celebrateUpdateProduct = exports.celebrateCreateProduct = void 0;
 const { celebrate, Joi } = require("celebrate");
 // product
 exports.celebrateCreateProduct = celebrate({
@@ -25,4 +25,18 @@ exports.celebrateUpdateProduct = celebrate({
             .required(),
     }),
 });
-// 
+// user
+exports.celebrateCreateUser = celebrate({
+    body: Joi.object().keys({
+        name: Joi.string().min(2).max(30),
+        lastname: Joi.string().min(2).max(30),
+        email: Joi.string().required().email(),
+        password: Joi.string().required().min(8),
+    }),
+});
+exports.celebrateLoginUser = celebrate({
+    body: Joi.object().keys({
+        email: Joi.string().required().email(),
+        password: Joi.string().required().min(8),
+    }),
+});

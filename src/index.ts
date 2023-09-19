@@ -12,6 +12,7 @@ import { Cart } from "./models/Cart";
 import { CartItem } from "./models/Cart-item";
 import { Order } from "./models/Order";
 import { OrderItem } from "./models/Order-item";
+import { celebrateCreateUser, celebrateLoginUser } from "./utils/celebrate";
 // import { CartItem } from "./models/Cart-item";
 
 dotenv.config();
@@ -30,12 +31,12 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.post("/signin", loginUser);
-app.post("/signup", createUser);
+app.post("/signin", celebrateLoginUser, loginUser);
+app.post("/signup", celebrateCreateUser, createUser);
 
 app.use("/", router);
 
-app.use(handleError); 
+app.use(handleError);
 User.hasOne(Cart);
 User.hasMany(Order);
 
