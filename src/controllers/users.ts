@@ -67,8 +67,10 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     } else {
       return next(new NotFoundError("Проверьте пароль"));
     }
+  } else {
+    return next(new NotFoundError("Проверьте введенные данные"));
   }
-  return next(new NotFoundError("Проверьте введенные данные"));
+  return next();
 };
 
 export const getCurrentUser: RequestHandler = (req, res, next) => {

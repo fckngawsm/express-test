@@ -92,7 +92,10 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             return next(new not_found_err_1.NotFoundError("Проверьте пароль"));
         }
     }
-    return next(new not_found_err_1.NotFoundError("Проверьте введенные данные"));
+    else {
+        return next(new not_found_err_1.NotFoundError("Проверьте введенные данные"));
+    }
+    return next();
 });
 exports.loginUser = loginUser;
 const getCurrentUser = (req, res, next) => {
