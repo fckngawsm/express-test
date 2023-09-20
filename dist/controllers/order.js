@@ -15,23 +15,35 @@ const Cart_item_1 = require("../models/Cart-item");
 const Order_1 = require("../models/Order");
 const Order_item_1 = require("../models/Order-item");
 const bad_request_err_1 = require("../utils/bad-request-err");
+const Product_1 = require("../models/Product");
 const getAllOrders = (_, res, next) => {
     // const { id } = req.user;
-    Order_1.Order.findAll({})
+    Order_1.Order.findAll({
+        include: [
+            {
+                model: Product_1.Product,
+                required: true,
+            },
+        ],
+    })
         .then((order) => {
         res.json({
             data: order,
         });
     })
         .catch((err) => {
-        next(err);
+        console.log(err);
+        return next(err);
     });
 };
 exports.getAllOrders = getAllOrders;
 const getOrderByUserId = (req, res, next) => {
     const { id } = req.user;
-    console.log(id);
-    Order_1.Order.findAll({ where: { UserId: id } })
+    Order_1.Order.findAll({
+        where: {
+            UserId: id,
+        },
+    })
         .then((order) => {
         res.json({
             data: order,

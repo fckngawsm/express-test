@@ -5,24 +5,36 @@ import { Order } from "../models/Order";
 import { OrderItem } from "../models/Order-item";
 import { NotFoundError } from "../utils/not-found-err";
 import { BadRequestError } from "../utils/bad-request-err";
+import { Product } from "../models/Product";
 
 export const getAllOrders: RequestHandler = (_, res, next) => {
   // const { id } = req.user;
-  Order.findAll({})
+  Order.findAll({
+    include: [
+      {
+        model: Product,
+        required: true,
+      },
+    ],
+  })
     .then((order) => {
       res.json({
         data: order,
       });
     })
     .catch((err) => {
-      next(err);
+      console.log(err);
+      return next(err);
     });
 };
 
 export const getOrderByUserId: RequestHandler = (req, res, next) => {
   const { id } = req.user;
-  console.log(id);
-  Order.findAll({ where: { UserId: id } })
+  Order.findAll({
+    where: {
+      UserId: id,
+    },
+  })
     .then((order) => {
       res.json({
         data: order,

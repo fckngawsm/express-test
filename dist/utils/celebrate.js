@@ -29,6 +29,7 @@ exports.celebrateCreateUser = celebrate({
     body: Joi.object().keys({
         name: Joi.string().min(2).max(30),
         lastname: Joi.string().min(2).max(30),
+        isAdmin: Joi.boolean().required(false),
         email: Joi.string().required().email(),
         password: Joi.string().required().min(8),
     }),

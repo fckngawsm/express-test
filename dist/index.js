@@ -37,6 +37,8 @@ Cart_1.Cart.belongsToMany(Product_1.Product, {
 });
 Cart_item_1.CartItem.belongsTo(Product_1.Product);
 Product_1.Product.hasMany(Cart_item_1.CartItem);
+Order_item_1.OrderItem.belongsTo(Product_1.Product);
+Product_1.Product.hasMany(Order_item_1.OrderItem);
 Product_1.Product.belongsToMany(Cart_1.Cart, {
     through: Cart_item_1.CartItem,
 });
