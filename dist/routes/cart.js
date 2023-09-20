@@ -6,4 +6,5 @@ const auth_1 = require("../middlewares/auth");
 const router = (0, express_1.Router)();
 router.get("/", auth_1.authenticateUserToken, cart_1.getUserCart);
 router.post("/", auth_1.authenticateUserToken, cart_1.addItemToCart);
+router.delete("/remove", auth_1.authenticateUserToken, cart_1.clearUserCart);
 exports.default = router;

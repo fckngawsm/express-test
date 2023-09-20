@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addItemToCart = exports.getUserCart = void 0;
+exports.clearUserCart = exports.addItemToCart = exports.getUserCart = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const not_found_err_1 = require("../utils/not-found-err");
@@ -55,10 +55,27 @@ const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         }
     }
     catch (error) {
-        return next('err');
+        return next("err");
     }
 });
 exports.addItemToCart = addItemToCart;
+const clearUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.user;
+    const userCart = yield Cart_1.Cart.findOne({ where: { UserId: id } });
+    res.send(userCart);
+    if (userCart) {
+        const cartItems = yield Cart_item_1.CartItem.destroy({
+            where: { cartId: userCart.id },
+            truncate: false,
+        });
+        res.send(cartItems);
+    }
+    else {
+        return next(new not_found_err_1.NotFoundError("Корзина для пользователя не найдена"));
+    }
+    return next();
+});
+exports.clearUserCart = clearUserCart;
 // Логика добавления товара в корзмну:
 // 1. Находим текущего пользователя -> по id пользователя находим корзину (а затем у нее id);
 // 2. Добавляем в cartitem товары , где мы уже имеем id пользователя и id корзины

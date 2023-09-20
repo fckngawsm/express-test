@@ -45,8 +45,24 @@ export const addItemToCart: RequestHandler = async (req, res, next) => {
       return next(new NotFoundError("корзина не найдена"));
     }
   } catch (error) {
-    return next('err');
+    return next("err");
   }
+};
+
+export const clearUserCart: RequestHandler = async (req, res, next) => {
+  const { id } = req.user;
+  const userCart = await Cart.findOne({ where: { UserId: id } });
+  res.send(userCart);
+  if (userCart) {
+    const cartItems = await CartItem.destroy({
+      where: { cartId: userCart.id },
+      truncate: false,
+    });
+    res.send(cartItems);
+  } else {
+    return next(new NotFoundError("Корзина для пользователя не найдена"));
+  }
+  return next();
 };
 
 // Логика добавления товара в корзмну:
