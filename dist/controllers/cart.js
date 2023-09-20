@@ -13,9 +13,18 @@ exports.addItemToCart = exports.getUserCart = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const not_found_err_1 = require("../utils/not-found-err");
+const Product_1 = require("../models/Product");
 const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
-    Cart_item_1.CartItem.findAll({ where: { CartId: id } })
+    Cart_item_1.CartItem.findAll({
+        where: { CartId: id },
+        include: [
+            {
+                model: Product_1.Product,
+                required: true,
+            },
+        ],
+    })
         .then((cart) => {
         res.send(cart);
     })

@@ -52,6 +52,7 @@ export const loginUser: RequestHandler = async (req, res, next) => {
   });
   if (user) {
     const matched = await bcrypt.compare(password, user.password);
+    console.log(password);
     if (matched) {
       const token = jwt.sign(
         { id: user.id, email: user.email, name: user.name },
@@ -60,7 +61,6 @@ export const loginUser: RequestHandler = async (req, res, next) => {
       const { password, ...userData } = user.dataValues;
       res.json({ token, ...userData });
     } else {
-      console.log("ss");
       return next(new NotFoundError("Проверьте пароль"));
     }
   }

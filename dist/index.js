@@ -35,6 +35,8 @@ Cart_1.Cart.belongsTo(User_1.User);
 Cart_1.Cart.belongsToMany(Product_1.Product, {
     through: Cart_item_1.CartItem,
 });
+Cart_item_1.CartItem.belongsTo(Product_1.Product);
+Product_1.Product.hasMany(Cart_item_1.CartItem);
 Product_1.Product.belongsToMany(Cart_1.Cart, {
     through: Cart_item_1.CartItem,
 });

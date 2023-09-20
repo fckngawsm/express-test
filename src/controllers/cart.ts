@@ -3,10 +3,20 @@ import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
 import { NotFoundError } from "../utils/not-found-err";
 import { BadRequestError } from "../utils/bad-request-err";
+import { OrderItem } from "../models/Order-item";
+import { Product } from "../models/Product";
 
 export const getUserCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
-  CartItem.findAll({ where: { CartId: id } })
+  CartItem.findAll({
+    where: { CartId: id },
+    include: [
+      {
+        model: Product,
+        required: true,
+      },
+    ],
+  })
     .then((cart) => {
       res.send(cart);
     })

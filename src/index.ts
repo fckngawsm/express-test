@@ -45,6 +45,9 @@ Cart.belongsToMany(Product, {
   through: CartItem,
 });
 
+CartItem.belongsTo(Product);
+Product.hasMany(CartItem);
+
 Product.belongsToMany(Cart, {
   through: CartItem,
 });
