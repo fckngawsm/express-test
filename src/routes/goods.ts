@@ -10,12 +10,20 @@ import {
   celebrateCreateProduct,
   celebrateUpdateProduct,
 } from "../utils/celebrate";
+import { isAdmin } from "../middlewares/isAdmin";
+import { authenticateUserToken } from "../middlewares/auth";
 
 const router = Router();
 
-router.post("/", celebrateCreateProduct, createGoods);
-router.patch("/:id", updateProductById);
+router.post(
+  "/",
+  authenticateUserToken,
+  isAdmin,
+  celebrateCreateProduct,
+  createGoods
+);
 router.get("/", getAllGoods);
-router.delete("/:id", deleteProductById); // исправить логику
+router.patch("/:id", authenticateUserToken, isAdmin, updateProductById);
+router.delete("/:id", authenticateUserToken, isAdmin, deleteProductById); // исправить логику
 
 export default router;

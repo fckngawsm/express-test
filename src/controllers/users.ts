@@ -54,7 +54,12 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     const matched = await bcrypt.compare(password, user.password);
     if (matched) {
       const token = jwt.sign(
-        { id: user.id, email: user.email, name: user.name },
+        {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          isAdmin: user.isAdmin,
+        },
         "secret-key"
       );
       const { password, ...userData } = user.dataValues;
