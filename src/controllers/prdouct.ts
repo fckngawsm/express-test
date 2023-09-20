@@ -1,5 +1,6 @@
 import e, { RequestHandler } from "express";
 import { Product } from "../models/Product";
+import { BadRequestError } from "../utils/bad-request-err";
 // import { BadRequestError } from "../utils/bad-request-err";
 
 export const getAllGoods: RequestHandler = (req, res, next) => {
@@ -37,15 +38,25 @@ export const createGoods: RequestHandler = (req, res, next) => {
     });
 };
 
-export const deleteProductById: RequestHandler = (req, res, next) => {
+export const deleteProductById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
-  Product.destroy({ where: { id: id } })
-    .then(() => {
-      res.send({ id });
-    })
-    .catch((err) => {
-      return next(err);
+  const product = await Product.findByPk(id);
+  if (product) {
+    await product.destroy();
+    res.json({
+      message: `товар с id ${id} успешно удален`,
     });
+  } else {
+    return next(new BadRequestError(`товара с id ${id} не существует`));
+  }
+  return next();
+  // Product.destroy({ where: { id: id } })
+  //   .then(() => {
+  //     res.send({ id });
+  //   })
+  //   .catch((err) => {
+  //     return next(err);
+  //   });
 };
 
 export const updateProductById: RequestHandler = (req, res, next) => {
