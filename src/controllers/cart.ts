@@ -27,6 +27,7 @@ export const getUserCart: RequestHandler = async (req, res, next) => {
 
 export const addItemToCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
+  // console.log(req.user)
   const { ProductId } = req.body;
   try {
     const cart = await Cart.findOne({ where: { UserId: id } });
@@ -44,7 +45,7 @@ export const addItemToCart: RequestHandler = async (req, res, next) => {
       return next(new NotFoundError("корзина не найдена"));
     }
   } catch (error) {
-    return next(error);
+    return next('err');
   }
 };
 

@@ -35,6 +35,7 @@ const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getUserCart = getUserCart;
 const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
+    // console.log(req.user)
     const { ProductId } = req.body;
     try {
         const cart = yield Cart_1.Cart.findOne({ where: { UserId: id } });
@@ -54,7 +55,7 @@ const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         }
     }
     catch (error) {
-        return next(error);
+        return next('err');
     }
 });
 exports.addItemToCart = addItemToCart;

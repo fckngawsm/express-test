@@ -78,11 +78,10 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     });
     if (user) {
         const matched = yield bcryptjs_1.default.compare(password, user.password);
-        console.log(password);
         if (matched) {
             const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name }, "secret-key");
             const _a = user.dataValues, { password } = _a, userData = __rest(_a, ["password"]);
-            res.json(Object.assign({ token }, userData));
+            res.send(Object.assign({ token }, userData));
         }
         else {
             return next(new not_found_err_1.NotFoundError("Проверьте пароль"));

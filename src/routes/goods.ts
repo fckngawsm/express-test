@@ -13,9 +13,9 @@ import {
 
 const router = Router();
 
-router.get("/", getAllGoods);
 router.post("/", celebrateCreateProduct, createGoods);
+router.patch("/:id", updateProductById);
+router.get("/", getAllGoods);
 router.delete("/:id", deleteProductById); // исправить логику
-router.patch("/:id", celebrateUpdateProduct, updateProductById);
 
 export default router;

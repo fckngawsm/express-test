@@ -23,9 +23,10 @@ const authenticateUserToken = (req, res, next) => __awaiter(void 0, void 0, void
         payload = jsonwebtoken_1.default.verify(token, "secret-key");
     }
     catch (error) {
-        return next(new unauthorized_err_1.UnauthorizedError("Ввойдите в аккаунт"));
+        return next(new unauthorized_err_1.UnauthorizedError("Ввойдите в аккаунт!!!"));
     }
     req.user = payload;
+    console.log(req.user);
     return next();
 });
 exports.authenticateUserToken = authenticateUserToken;
