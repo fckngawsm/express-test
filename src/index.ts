@@ -33,8 +33,8 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.post("/signin", celebrateLoginUser, loginUser);
 app.post("/signup", celebrateCreateUser, createUser);
+app.post("/signin", celebrateLoginUser, loginUser);
 
 app.use("/", router);
 
