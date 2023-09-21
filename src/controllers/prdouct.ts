@@ -1,6 +1,6 @@
 import e, { RequestHandler } from "express";
 import { Product } from "../models/Product";
-import { BadRequestError } from "../utils/bad-request-err";
+import { BadRequestError } from "../utils/err/bad-request-err";
 // import { BadRequestError } from "../utils/bad-request-err";
 
 export const getAllGoods: RequestHandler = (req, res, next) => {
@@ -50,13 +50,6 @@ export const deleteProductById: RequestHandler = async (req, res, next) => {
     return next(new BadRequestError(`товара с id ${id} не существует`));
   }
   return next();
-  // Product.destroy({ where: { id: id } })
-  //   .then(() => {
-  //     res.send({ id });
-  //   })
-  //   .catch((err) => {
-  //     return next(err);
-  //   });
 };
 
 export const updateProductById: RequestHandler = (req, res, next) => {

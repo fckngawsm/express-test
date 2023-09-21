@@ -27,9 +27,9 @@ exports.getCurrentUser = exports.loginUser = exports.createUser = exports.getAll
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
-const bad_request_err_1 = require("../utils/bad-request-err");
+const bad_request_err_1 = require("../utils/err/bad-request-err");
 const Cart_1 = require("../models/Cart");
-const not_found_err_1 = require("../utils/not-found-err");
+const not_found_err_1 = require("../utils/err/not-found-err");
 const getAllUsers = (_, res, next) => {
     User_1.User.findAll({})
         .then((user) => {
@@ -60,7 +60,6 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             });
         }
         else {
-            // throw new BadRequestError("Проверьте введенные данные");
             return next(new bad_request_err_1.BadRequestError("Проверьте введенные данные"));
         }
     }

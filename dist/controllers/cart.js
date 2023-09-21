@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearUserCart = exports.addItemToCart = exports.getUserCart = void 0;
 const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
-const not_found_err_1 = require("../utils/not-found-err");
+const not_found_err_1 = require("../utils/err/not-found-err");
 const Product_1 = require("../models/Product");
 const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
@@ -35,7 +35,6 @@ const getUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getUserCart = getUserCart;
 const addItemToCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
-    // console.log(req.user)
     const { ProductId } = req.body;
     try {
         const cart = yield Cart_1.Cart.findOne({ where: { UserId: id } });
@@ -76,6 +75,3 @@ const clearUserCart = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     return next();
 });
 exports.clearUserCart = clearUserCart;
-// Логика добавления товара в корзмну:
-// 1. Находим текущего пользователя -> по id пользователя находим корзину (а затем у нее id);
-// 2. Добавляем в cartitem товары , где мы уже имеем id пользователя и id корзины

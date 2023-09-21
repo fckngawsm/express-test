@@ -9,7 +9,7 @@ import {
 import {
   celebrateCreateProduct,
   celebrateUpdateProduct,
-} from "../utils/celebrate";
+} from "../utils/celebrate/celebrate";
 import { isAdmin } from "../middlewares/isAdmin";
 import { authenticateUserToken } from "../middlewares/auth";
 

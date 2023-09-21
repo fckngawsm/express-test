@@ -3,12 +3,10 @@ import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
 import { Order } from "../models/Order";
 import { OrderItem } from "../models/Order-item";
-import { NotFoundError } from "../utils/not-found-err";
-import { BadRequestError } from "../utils/bad-request-err";
+import { BadRequestError } from "../utils/err/bad-request-err";
 import { Product } from "../models/Product";
 
 export const getAllOrders: RequestHandler = (_, res, next) => {
-  // const { id } = req.user;
   Order.findAll({
     include: [
       {

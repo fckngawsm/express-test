@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAdmin = void 0;
 const User_1 = require("../models/User");
-const forbidden_err_1 = require("../utils/forbidden-err");
+const forbidden_err_1 = require("../utils/err/forbidden-err");
 const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_1.User.findOne({ where: { id: req.user.id } });
     if (!user || !user.isAdmin) {

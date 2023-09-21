@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const prdouct_1 = require("../controllers/prdouct");
-const celebrate_1 = require("../utils/celebrate");
+const celebrate_1 = require("../utils/celebrate/celebrate");
 const isAdmin_1 = require("../middlewares/isAdmin");
 const auth_1 = require("../middlewares/auth");
 const router = (0, express_1.Router)();

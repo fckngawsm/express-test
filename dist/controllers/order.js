@@ -14,10 +14,9 @@ const Cart_1 = require("../models/Cart");
 const Cart_item_1 = require("../models/Cart-item");
 const Order_1 = require("../models/Order");
 const Order_item_1 = require("../models/Order-item");
-const bad_request_err_1 = require("../utils/bad-request-err");
+const bad_request_err_1 = require("../utils/err/bad-request-err");
 const Product_1 = require("../models/Product");
 const getAllOrders = (_, res, next) => {
-    // const { id } = req.user;
     Order_1.Order.findAll({
         include: [
             {

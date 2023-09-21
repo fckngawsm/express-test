@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateUserToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const unauthorized_err_1 = require("../utils/unauthorized-err");
+const unauthorized_err_1 = require("../utils/err/unauthorized-err");
 const authenticateUserToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];

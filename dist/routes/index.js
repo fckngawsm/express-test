@@ -11,7 +11,6 @@ const order_1 = __importDefault(require("./order"));
 const express_1 = require("express");
 const router = (0, express_1.Router)();
 exports.router = router;
-// router.use("/", authenticateUserToken);
 router.use("/cart", cart_1.default);
 router.use("/users", users_1.default);
 router.use("/goods", goods_1.default);

@@ -1,9 +1,7 @@
 import { RequestHandler } from "express";
 import { Cart } from "../models/Cart";
 import { CartItem } from "../models/Cart-item";
-import { NotFoundError } from "../utils/not-found-err";
-import { BadRequestError } from "../utils/bad-request-err";
-import { OrderItem } from "../models/Order-item";
+import { NotFoundError } from "../utils/err/not-found-err";
 import { Product } from "../models/Product";
 
 export const getUserCart: RequestHandler = async (req, res, next) => {
@@ -27,7 +25,6 @@ export const getUserCart: RequestHandler = async (req, res, next) => {
 
 export const addItemToCart: RequestHandler = async (req, res, next) => {
   const { id } = req.user;
-  // console.log(req.user)
   const { ProductId } = req.body;
   try {
     const cart = await Cart.findOne({ where: { UserId: id } });
@@ -64,7 +61,3 @@ export const clearUserCart: RequestHandler = async (req, res, next) => {
   }
   return next();
 };
-
-// Логика добавления товара в корзмну:
-// 1. Находим текущего пользователя -> по id пользователя находим корзину (а затем у нее id);
-// 2. Добавляем в cartitem товары , где мы уже имеем id пользователя и id корзины

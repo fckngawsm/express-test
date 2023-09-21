@@ -12,7 +12,7 @@ import { Cart } from "./models/Cart";
 import { CartItem } from "./models/Cart-item";
 import { Order } from "./models/Order";
 import { OrderItem } from "./models/Order-item";
-import { celebrateCreateUser, celebrateLoginUser } from "./utils/celebrate";
+import { celebrateCreateUser, celebrateLoginUser } from "./utils/celebrate/celebrate";
 // import { CartItem } from "./models/Cart-item";
 
 dotenv.config();

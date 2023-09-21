@@ -1,5 +1,12 @@
 // @/models.ts
-import { Table, Model, Column, DataType, PrimaryKey, AutoIncrement } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+} from "sequelize-typescript";
 
 const Categories = [
   "книги",

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateProductById = exports.deleteProductById = exports.createGoods = exports.getAllGoods = void 0;
 const Product_1 = require("../models/Product");
-const bad_request_err_1 = require("../utils/bad-request-err");
+const bad_request_err_1 = require("../utils/err/bad-request-err");
 // import { BadRequestError } from "../utils/bad-request-err";
 const getAllGoods = (req, res, next) => {
     Product_1.Product.findAll({})
@@ -59,13 +59,6 @@ const deleteProductById = (req, res, next) => __awaiter(void 0, void 0, void 0, 
         return next(new bad_request_err_1.BadRequestError(`товара с id ${id} не существует`));
     }
     return next();
-    // Product.destroy({ where: { id: id } })
-    //   .then(() => {
-    //     res.send({ id });
-    //   })
-    //   .catch((err) => {
-    //     return next(err);
-    //   });
 });
 exports.deleteProductById = deleteProductById;
 const updateProductById = (req, res, next) => {

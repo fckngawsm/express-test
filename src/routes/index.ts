@@ -6,7 +6,6 @@ import { Router } from "express";
 
 const router = Router();
 
-// router.use("/", authenticateUserToken);
 router.use("/cart", cartRoutes);
 router.use("/users", userRoutes);
 router.use("/goods", goodsRoutes);

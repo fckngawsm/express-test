@@ -2,9 +2,9 @@ import { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
-import { BadRequestError } from "../utils/bad-request-err";
+import { BadRequestError } from "../utils/err/bad-request-err";
 import { Cart } from "../models/Cart";
-import { NotFoundError } from "../utils/not-found-err";
+import { NotFoundError } from "../utils/err/not-found-err";
 
 export const getAllUsers: RequestHandler = (_, res, next) => {
   User.findAll({})
@@ -35,7 +35,6 @@ export const createUser: RequestHandler = async (req, res, next) => {
         userId: `user id ${user.id}`,
       });
     } else {
-      // throw new BadRequestError("Проверьте введенные данные");
       return next(new BadRequestError("Проверьте введенные данные"));
     }
   } catch (error) {
