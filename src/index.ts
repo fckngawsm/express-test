@@ -12,11 +12,13 @@ import { Cart } from "./models/Cart";
 import { CartItem } from "./models/Cart-item";
 import { Order } from "./models/Order";
 import { OrderItem } from "./models/Order-item";
-import { celebrateCreateUser, celebrateLoginUser } from "./utils/celebrate/celebrate";
-// import { CartItem } from "./models/Cart-item";
+import {
+  celebrateCreateUser,
+  celebrateLoginUser,
+} from "./utils/celebrate/celebrate";
 
 dotenv.config();
-// понять куда лучше вынести
+
 declare global {
   namespace Express {
     interface Request {

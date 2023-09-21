@@ -21,7 +21,6 @@ export const getAllOrders: RequestHandler = (_, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       return next(err);
     });
 };

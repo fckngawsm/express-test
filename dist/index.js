@@ -18,7 +18,6 @@ const Cart_item_1 = require("./models/Cart-item");
 const Order_1 = require("./models/Order");
 const Order_item_1 = require("./models/Order-item");
 const celebrate_1 = require("./utils/celebrate/celebrate");
-// import { CartItem } from "./models/Cart-item";
 dotenv_1.default.config();
 const port = process.env.PORT;
 const app = (0, express_1.default)();

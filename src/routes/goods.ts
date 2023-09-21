@@ -8,7 +8,6 @@ import {
 } from "../controllers/prdouct";
 import {
   celebrateCreateProduct,
-  celebrateUpdateProduct,
 } from "../utils/celebrate/celebrate";
 import { isAdmin } from "../middlewares/isAdmin";
 import { authenticateUserToken } from "../middlewares/auth";
@@ -24,6 +23,6 @@ router.post(
 );
 router.get("/", getAllGoods);
 router.patch("/:id", authenticateUserToken, isAdmin, updateProductById);
-router.delete("/:id", authenticateUserToken, isAdmin, deleteProductById); // исправить логику
+router.delete("/:id", authenticateUserToken, isAdmin, deleteProductById);
 
 export default router;

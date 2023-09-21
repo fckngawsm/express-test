@@ -9,5 +9,5 @@ const router = (0, express_1.Router)();
 router.post("/", auth_1.authenticateUserToken, isAdmin_1.isAdmin, celebrate_1.celebrateCreateProduct, prdouct_1.createGoods);
 router.get("/", prdouct_1.getAllGoods);
 router.patch("/:id", auth_1.authenticateUserToken, isAdmin_1.isAdmin, prdouct_1.updateProductById);
-router.delete("/:id", auth_1.authenticateUserToken, isAdmin_1.isAdmin, prdouct_1.deleteProductById); // исправить логику
+router.delete("/:id", auth_1.authenticateUserToken, isAdmin_1.isAdmin, prdouct_1.deleteProductById);
 exports.default = router;
